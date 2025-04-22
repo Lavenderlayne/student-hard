@@ -1,0 +1,34 @@
+-- database: d:\p\logika\student-hard\student.db
+
+-- Створення таблиці студентів
+CREATE TABLE students (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    age INTEGER DEFAULT 17,
+    major TEXT
+);
+
+-- Створення таблиці курсів
+CREATE TABLE courses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    course_name TEXT NOT NULL,
+    instructor TEXT
+);
+
+-- Вставка прикладу студентів
+INSERT INTO students (name, age, major) VALUES
+('Alice', 20, 'Computer Science'),
+('Bob', 19, 'Mathematics'),
+('Charlie', 21, 'Physics');
+
+-- Вставка прикладу курсів
+INSERT INTO courses (course_name, instructor) VALUES
+('Database Systems', 'Dr. Smith'),
+('Algorithms', 'Prof. Johnson'),
+('Advanced SQL', 'Dr. Brown');
+
+-- Перегляд усіх студентів
+SELECT * FROM students;
+
+-- Перегляд усіх курсів
+SELECT * FROM courses;
