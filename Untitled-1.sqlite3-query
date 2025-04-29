@@ -1,7 +1,7 @@
 -- database: d:\p\logika\student-hard\student.db
 
 -- Створення таблиці студентів
-CREATE TABLE students (
+CREATE TABLE IF NOT EXISTS students (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     age INTEGER DEFAULT 17,
@@ -9,10 +9,19 @@ CREATE TABLE students (
 );
 
 -- Створення таблиці курсів
-CREATE TABLE courses (
+CREATE TABLE IF NOT EXISTS courses (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     course_name TEXT NOT NULL,
     instructor TEXT
+);
+
+-- Створення таблиці запису на курси (звʼязок many-to-many)
+CREATE TABLE IF NOT EXISTS enrollment (
+    student_id INTEGER,
+    course_id INTEGER,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (course_id) REFERENCES courses(id)
 );
 
 -- Вставка прикладу студентів
@@ -27,8 +36,22 @@ INSERT INTO courses (course_name, instructor) VALUES
 ('Algorithms', 'Prof. Johnson'),
 ('Advanced SQL', 'Dr. Brown');
 
+-- Приклади реєстрації студентів на курси
+INSERT INTO enrollment (student_id, course_id) VALUES
+(1, 1),
+(1, 3),
+(2, 2),
+(3, 1),
+(3, 3);
+
 -- Перегляд усіх студентів
 SELECT * FROM students;
 
 -- Перегляд усіх курсів
 SELECT * FROM courses;
+
+-- Виведення студентів, зареєстрованих на конкретний курс (наприклад, course_id = 1)
+SELECT s.id, s.name, s.major
+FROM students s
+JOIN enrollment e ON s.id = e.student_id
+WHERE e.course_id = 1;
